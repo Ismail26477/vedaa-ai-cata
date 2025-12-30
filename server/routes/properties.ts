@@ -1,5 +1,5 @@
 import express from "express"
-import Property from "../models/Property.js"
+import Property from "../models/Property.ts"
 
 const router = express.Router()
 
