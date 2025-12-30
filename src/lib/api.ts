@@ -2,15 +2,19 @@ const API_URL = (() => {
   const envUrl = import.meta.env.VITE_API_URL
   const fallbackUrl = "https://vedaa-ai-cata-2.onrender.com/api"
 
-  if (envUrl) {
+  if (envUrl && !envUrl.includes("your-app") && !envUrl.includes("placeholder")) {
     console.log("[v0] Using VITE_API_URL:", envUrl)
     return envUrl
   }
 
-  // In development, allow localhost; in production, use Render
+  // In development, allow localhost; in production, always use Render
   if (import.meta.env.MODE === "development") {
     console.log("[v0] Using development API URL: http://localhost:5000/api")
     return "http://localhost:5000/api"
+  }
+
+  if (envUrl) {
+    console.warn("[v0] Invalid VITE_API_URL detected, using fallback:", envUrl)
   }
 
   console.log("[v0] Using production API URL:", fallbackUrl)
