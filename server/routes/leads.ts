@@ -1,5 +1,5 @@
 import express from "express"
-import Lead from "../models/Lead.ts"
+import Lead from "../models/Lead.js"
 
 const router = express.Router()
 
