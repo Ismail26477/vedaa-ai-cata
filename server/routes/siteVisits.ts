@@ -1,5 +1,5 @@
 import express from "express"
-import SiteVisit from "../models/SiteVisit.js"
+import SiteVisit from "../models/SiteVisit.ts"
 
 const router = express.Router()
 
