@@ -10,7 +10,7 @@
     "seed": "tsx scripts/seedDatabase.ts",
     "build": "vite build",
     "build:dev": "vite build --mode development",
-    "start": "node --loader tsx server/prod.ts",
+    "start": "node --import tsx server/prod.ts",
     "lint": "eslint .",
     "preview": "vite preview"
   },
