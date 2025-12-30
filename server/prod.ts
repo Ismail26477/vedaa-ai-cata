@@ -3,10 +3,10 @@ import path from "path"
 import { fileURLToPath } from "url"
 import cors from "cors"
 import dotenv from "dotenv"
-import connectDB from "./config/database.ts"
-import propertyRoutes from "./routes/properties.ts"
-import leadRoutes from "./routes/leads.ts"
-import siteVisitRoutes from "./routes/siteVisits.ts"
+import connectDB from "./config/database.js"
+import propertyRoutes from "./routes/properties.js"
+import leadRoutes from "./routes/leads.js"
+import siteVisitRoutes from "./routes/siteVisits.js"
 
 dotenv.config()
 
