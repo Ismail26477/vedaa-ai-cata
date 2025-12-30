@@ -71,13 +71,18 @@ const AddPropertyModal: React.FC<AddPropertyModalProps> = ({ isOpen, onClose }) 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files)
-      const newFiles = [...imageFiles, ...files]
-      setImageFiles(newFiles)
 
-      const newPreviews = files.map((file) => URL.createObjectURL(file))
-      setImagePreviews((prev) => [...prev, ...newPreviews])
+      files.forEach((file) => {
+        const reader = new FileReader()
+        reader.onload = (event) => {
+          const base64String = event.target?.result as string
+          setImageFiles((prev) => [...prev, file])
+          setImagePreviews((prev) => [...prev, base64String])
+        }
+        reader.readAsDataURL(file)
+      })
 
-      console.log("[v0] Selected images:", newFiles.length)
+      console.log("[v0] Selected images:", files.length)
     }
   }
 
@@ -103,13 +108,7 @@ const AddPropertyModal: React.FC<AddPropertyModalProps> = ({ isOpen, onClose }) 
     setIsLoading(true)
 
     try {
-      // In a production environment, this is where you would perform the actual file upload to a server
-      const propertyImages =
-        imagePreviews.length > 0
-          ? imagePreviews.map((url, i) =>
-              url.startsWith("blob:") ? `/placeholder.svg?height=800&width=1200&query=property-${i}` : url,
-            )
-          : ["/placeholder.svg"]
+      const propertyImages = imagePreviews.length > 0 ? imagePreviews : ["/placeholder.svg"]
 
       const newProperty: Omit<Property, "id" | "createdAt"> = {
         title: formData.title,
@@ -132,7 +131,7 @@ const AddPropertyModal: React.FC<AddPropertyModalProps> = ({ isOpen, onClose }) 
         },
       }
 
-      console.log("[v0] Adding property:", newProperty)
+      console.log("[v0] Adding property with images:", propertyImages.length)
       await addProperty(newProperty)
 
       toast({
